@@ -11,7 +11,7 @@ class AppController {
 	 * @returns {object} object
 	 */
   static landRoute(req, res) {
-    ResponseService.setSuccess(OK, 'NodeJS/Express template');
+    ResponseService.setSuccess(OK, 'Tekana-eWallet API');
     return ResponseService.send(res);
   }
 

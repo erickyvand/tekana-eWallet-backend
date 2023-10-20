@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { config } from 'dotenv';
 import routes from './routes';
 import configureSwagger from './swagger';
+import errorMiddleware from './middlewares/error.middleware';
 
 config();
 
@@ -18,5 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use('/', routes);
+app.use('/', errorMiddleware);
 
 export default app;

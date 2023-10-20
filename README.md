@@ -1,5 +1,38 @@
 # Tekana-eWallet
 
+# Technology used:
+- NodeJs/ExpressJs
+- PostgreSQL
+- Sequelize
+
+# Step by step to run the project locally:
+
+- Get the project in your laptop with: `git clone https://github.com/erickyvand/tekana-eWallet-backend.git`
+- Change to project directory with: `cd tekana-eWallet-backend`
+- Open the project in VScode with: `code .`
+- Open vscode terminal
+- In the project root, create `.env` file with: `touch .env`
+- Refer to `.env.example` to update the `.env` file
+- Install project packages with: `npm install`
+- Create database name of your choice (ex: ewallet)
+- Run migration files to create tables in the created database with: `npm run migrate:up`
+- Start the project with: `npm run dev:server`
+
+# Endpoints
+- Register: `POST /api/auth/register`
+- Login: `POST /api/auth/login`
+- Get Customers: `POST /api/customers`
+- Create transactions: `POST /api/financials/transactions`
+- Get transactions: `POST /api/financials/find/transactions`
+- Create account entries: `POST /api/financials/entries`
+- Get account entries aggregations: `GET /api/financials/aggregations`
+- Get transactions aggregations (Receiver): `GET /api/financials/aggregations/receiver`
+- Get transactions aggregations (Sender): `GET /api/financials/aggregations/sender`
+- Get Customers wallets: `POST /api/financials/wallets`
+
+# Postman collection
+- Download postman collection via this file: [Tekana-ewallet postman collection](https://drive.google.com/file/d/1ZMqtoNJ6nIWQYGzMPfVK482LxnU9I5HT/view?usp=drive_link)
+
 # Here's a step-by-step strategy to guide you from day one until the go-live of the pilot system:
 
 # Strategy:
