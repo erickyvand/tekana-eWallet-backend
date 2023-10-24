@@ -3,17 +3,29 @@ import { config } from 'dotenv';
 config();
 
 export const development = {
-  url: process.env.DATABASE_URL,
+  database: process.env.DATABASE_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DATABASE_PORT,
   dialect: process.env.DATABASE_DRIVER,
   logging: false,
 };
 export const test = {
-  url: process.env.DATABASE_URL,
+  database: process.env.DATABASE_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DATABASE_PORT,
   dialect: process.env.DATABASE_DRIVER,
   logging: false,
 };
 export const production = {
-  url: process.env.DATABASE_URL,
+  database: process.env.DATABASE_NAME,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DATABASE_PORT,
   dialect: process.env.DATABASE_DRIVER,
   logging: false,
 };
