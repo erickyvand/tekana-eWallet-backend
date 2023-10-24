@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Wallet',
       schema: 'financial',
-      tableName: 'Wallets',
+      tableName: 'wallets',
     },
   );
   return Wallet;

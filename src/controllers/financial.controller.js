@@ -5,6 +5,26 @@ import logger from '../utils/logger';
 
 const financialLogger = logger('financials');
 
+const calculateBalance = async (customerId) => {
+  const entryAggr = await FinancialService.findAccountEntryAggregation({
+    customerId,
+  });
+
+  const receiver = await FinancialService.receiverAggregation({
+    receiverId: customerId,
+  });
+
+  const sender = await FinancialService.senderAggregation({
+    senderId: customerId,
+  });
+  const accountEntry = entryAggr?.totalAmount || 0;
+  const transReceiver = receiver?.totalAmount || 0;
+  const transSender = sender?.totalAmount || 0;
+
+  const actualBalance = accountEntry - transSender + transReceiver;
+  return actualBalance;
+};
+
 /**
  * Financial controller class
  */
@@ -24,23 +44,7 @@ class FinancialController {
 
       const results = await FinancialService.createTransaction(transaction);
 
-      const entry = await FinancialService.findAccountEntryAggregation({
-        customerId: userData.id,
-      });
-
-      const receiver = await FinancialService.receiverAggregation({
-        receiverId: userData.id,
-      });
-
-      const sender = await FinancialService.senderAggregation({
-        senderId: userData.id,
-      });
-
-      const accountEntry = entry?.totalAmount || 0;
-      const transReceiver = receiver?.totalAmount || 0;
-      const transSender = sender?.totalAmount || 0;
-
-      const actualBalance = accountEntry - transSender + transReceiver;
+      const actualBalance = await calculateBalance(userData.id);
 
       await FinancialService.updateWallet(
         { customerId: senderId },
@@ -70,9 +74,19 @@ class FinancialController {
   static async entry(req, res, next) {
     try {
       const { body, userData } = req;
+      const { customerId } = body;
       const entry = { ...body, createdById: userData.id };
 
       const results = await FinancialService.createEntry(entry);
+
+      const actualBalance = await calculateBalance(customerId);
+
+      await FinancialService.updateWallet(
+        { customerId },
+        {
+          balance: actualBalance,
+        },
+      );
 
       financialLogger.info(results);
       return ResponseService.handleSuccessResponse(
